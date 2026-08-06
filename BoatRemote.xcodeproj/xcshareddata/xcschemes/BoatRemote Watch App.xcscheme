@@ -30,8 +30,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "59C405C03011603700B8CEAE"
-               BuildableName = "BoatRemote.app"
-               BlueprintName = "BoatRemote"
+               BuildableName = "BoatRemoteWidget.app"
+               BlueprintName = "BoatRemoteWidget"
                ReferencedContainer = "container:BoatRemote.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
