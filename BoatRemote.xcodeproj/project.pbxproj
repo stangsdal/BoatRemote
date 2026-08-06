@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		592DE24830248DF000A6C486 /* RemoteWidgetControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599DD0BF302487DF00E2857C /* RemoteWidgetControl.swift */; };
+		592DE24930248DF000A6C486 /* RemoteWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599DD0BD302487DF00E2857C /* RemoteWidget.swift */; };
+		592DE24A30248DF000A6C486 /* RemoteWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599DD0BE302487DF00E2857C /* RemoteWidgetBundle.swift */; };
+		592DE24B30248DF000A6C486 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599DD0BA302487DF00E2857C /* AppIntent.swift */; };
 		5996E2C4301E4F3500D4864A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5996E2C3301E4F3500D4864A /* WidgetKit.framework */; };
 		5996E2C6301E4F3500D4864A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5996E2C5301E4F3500D4864A /* SwiftUI.framework */; };
 		5996E2D5301E4F3700D4864A /* RemoteExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5996E2C1301E4F3500D4864A /* RemoteExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -279,6 +283,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				592DE24830248DF000A6C486 /* RemoteWidgetControl.swift in Sources */,
+				592DE24930248DF000A6C486 /* RemoteWidget.swift in Sources */,
+				592DE24A30248DF000A6C486 /* RemoteWidgetBundle.swift in Sources */,
+				592DE24B30248DF000A6C486 /* AppIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
