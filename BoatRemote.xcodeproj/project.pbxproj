@@ -7,10 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5996E2C4301E4F3500D4864A /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5996E2C3301E4F3500D4864A /* WidgetKit.framework */; };
+		5996E2C6301E4F3500D4864A /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5996E2C5301E4F3500D4864A /* SwiftUI.framework */; };
+		5996E2D5301E4F3700D4864A /* RemoteExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5996E2C1301E4F3500D4864A /* RemoteExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		59C324B7302479A600DB931F /* BoatRemote-Watch-App-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59C324B6302479A600DB931F /* BoatRemote-Watch-App-Info.plist */; };
 		59C405C83011603700B8CEAE /* BoatRemote Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 59C405C73011603700B8CEAE /* BoatRemote Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5996E2D3301E4F3700D4864A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59C405BB3011603700B8CEAE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5996E2C0301E4F3500D4864A;
+			remoteInfo = RemoteExtension;
+		};
 		59C405C93011603700B8CEAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 59C405BB3011603700B8CEAE /* Project object */;
@@ -21,6 +32,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5996E2DA301E4F3700D4864A /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5996E2D5301E4F3700D4864A /* RemoteExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C405D73011603A00B8CEAE /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -35,11 +57,33 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5996E2C1301E4F3500D4864A /* RemoteExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RemoteExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5996E2C3301E4F3500D4864A /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		5996E2C5301E4F3500D4864A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		59C324B6302479A600DB931F /* BoatRemote-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BoatRemote-Watch-App-Info.plist"; sourceTree = "<group>"; };
 		59C405C13011603700B8CEAE /* BoatRemote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoatRemote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59C405C73011603700B8CEAE /* BoatRemote Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BoatRemote Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5996E2D6301E4F3700D4864A /* Exceptions for "Remote" folder in "RemoteExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5996E2C0301E4F3500D4864A /* RemoteExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5996E2C7301E4F3500D4864A /* Remote */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5996E2D6301E4F3700D4864A /* Exceptions for "Remote" folder in "RemoteExtension" target */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
 		59C405CB3011603700B8CEAE /* BoatRemote Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "BoatRemote Watch App";
@@ -48,6 +92,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5996E2BE301E4F3500D4864A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5996E2C6301E4F3500D4864A /* SwiftUI.framework in Frameworks */,
+				5996E2C4301E4F3500D4864A /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C405C43011603700B8CEAE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,11 +111,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5996E2C2301E4F3500D4864A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5996E2C3301E4F3500D4864A /* WidgetKit.framework */,
+				5996E2C5301E4F3500D4864A /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		59C405BA3011603700B8CEAE = {
 			isa = PBXGroup;
 			children = (
 				59C405CB3011603700B8CEAE /* BoatRemote Watch App */,
+				5996E2C7301E4F3500D4864A /* Remote */,
+				5996E2C2301E4F3500D4864A /* Frameworks */,
 				59C405C23011603700B8CEAE /* Products */,
+				59C324B6302479A600DB931F /* BoatRemote-Watch-App-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +136,7 @@
 			children = (
 				59C405C13011603700B8CEAE /* BoatRemote.app */,
 				59C405C73011603700B8CEAE /* BoatRemote Watch App.app */,
+				5996E2C1301E4F3500D4864A /* RemoteExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -78,6 +144,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5996E2C0301E4F3500D4864A /* RemoteExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5996E2D7301E4F3700D4864A /* Build configuration list for PBXNativeTarget "RemoteExtension" */;
+			buildPhases = (
+				5996E2BD301E4F3500D4864A /* Sources */,
+				5996E2BE301E4F3500D4864A /* Frameworks */,
+				5996E2BF301E4F3500D4864A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5996E2C7301E4F3500D4864A /* Remote */,
+			);
+			name = RemoteExtension;
+			packageProductDependencies = (
+			);
+			productName = RemoteExtension;
+			productReference = 5996E2C1301E4F3500D4864A /* RemoteExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		59C405C03011603700B8CEAE /* BoatRemote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59C405D83011603A00B8CEAE /* Build configuration list for PBXNativeTarget "BoatRemote" */;
@@ -104,10 +192,12 @@
 				59C405C33011603700B8CEAE /* Sources */,
 				59C405C43011603700B8CEAE /* Frameworks */,
 				59C405C53011603700B8CEAE /* Resources */,
+				5996E2DA301E4F3700D4864A /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5996E2D4301E4F3700D4864A /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				59C405CB3011603700B8CEAE /* BoatRemote Watch App */,
@@ -129,6 +219,9 @@
 				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
+					5996E2C0301E4F3500D4864A = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					59C405C03011603700B8CEAE = {
 						CreatedOnToolsVersion = 26.6;
 					};
@@ -153,11 +246,19 @@
 			targets = (
 				59C405C03011603700B8CEAE /* BoatRemote */,
 				59C405C63011603700B8CEAE /* BoatRemote Watch App */,
+				5996E2C0301E4F3500D4864A /* RemoteExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5996E2BF301E4F3500D4864A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C405BF3011603700B8CEAE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,12 +270,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59C324B7302479A600DB931F /* BoatRemote-Watch-App-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5996E2BD301E4F3500D4864A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C405C33011603700B8CEAE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +294,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5996E2D4301E4F3700D4864A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5996E2C0301E4F3500D4864A /* RemoteExtension */;
+			targetProxy = 5996E2D3301E4F3700D4864A /* PBXContainerItemProxy */;
+		};
 		59C405CA3011603700B8CEAE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 59C405C63011603700B8CEAE /* BoatRemote Watch App */;
@@ -193,6 +307,73 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5996E2D8301E4F3700D4864A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8YVJ92BHC4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Remote/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Remote;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = se.philip.BoatRemote.watchkitapp.Remote;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.5;
+			};
+			name = Debug;
+		};
+		5996E2D9301E4F3700D4864A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8YVJ92BHC4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Remote/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Remote;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = se.philip.BoatRemote.watchkitapp.Remote;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.5;
+			};
+			name = Release;
+		};
 		59C405D23011603A00B8CEAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -313,17 +494,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8YVJ92BHC4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BoatRemote-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = BoatRemote;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = se.philip.BoatRemote.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -345,17 +529,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8YVJ92BHC4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "BoatRemote-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = BoatRemote;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = se.philip.BoatRemote.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -376,9 +563,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8YVJ92BHC4;
 				INFOPLIST_KEY_CFBundleDisplayName = BoatRemote;
-				MARKETING_VERSION = 1.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = se.philip.BoatRemote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -392,9 +581,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 8YVJ92BHC4;
 				INFOPLIST_KEY_CFBundleDisplayName = BoatRemote;
-				MARKETING_VERSION = 1.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = se.philip.BoatRemote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -408,6 +599,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5996E2D7301E4F3700D4864A /* Build configuration list for PBXNativeTarget "RemoteExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5996E2D8301E4F3700D4864A /* Debug */,
+				5996E2D9301E4F3700D4864A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		59C405BE3011603700B8CEAE /* Build configuration list for PBXProject "BoatRemote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
