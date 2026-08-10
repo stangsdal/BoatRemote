@@ -3,6 +3,14 @@
 `AutopilotService` är kärnan i watchOS-appen **BoatRemote**. Den hanterar kommunikation, status och styrning mot [Signal K](https://signalk.org/)-servern ombord på båten (Fideli).
 
 ---
+Boat-app, inside watch:
+<img width="200" alt="Boat-app" src="https://github.com/user-attachments/assets/1ef09676-a406-468b-be74-f0f38cbd828b" />
+
+Boat-app, accessible directly trough a complication in main watch-face.
+
+<img width="200" alt="watch_with_complication" src="https://github.com/user-attachments/assets/3cd5cad9-3ef6-4b67-94b0-a943105fb992" />
+
+
 
 ## 🌟 Huvudfunktioner
 
