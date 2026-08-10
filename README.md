@@ -94,3 +94,4 @@ struct ContentView: View {
 | **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/state` | Ändra läge (Auto, Standby, Wind, etc.) |
 | **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/actions/adjustHeading` | Justera kurs (t.ex. +1, -10) |
 | **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/actions/tack` | Slå (port/starboard) |
+
