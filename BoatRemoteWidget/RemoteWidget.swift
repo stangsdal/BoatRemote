@@ -8,7 +8,6 @@ struct SimpleEntry: TimelineEntry {
 
 // 2. Tidslinjestyrning
 struct Provider: TimelineProvider {
-    // Definiera explicit vilken Entry-typ som används
     typealias Entry = SimpleEntry
 
     func placeholder(in context: Context) -> SimpleEntry {
@@ -26,6 +25,7 @@ struct Provider: TimelineProvider {
         completion(timeline)
     }
 }
+
 // 3. SwiftUI-vy anpassad efter klockans komplikationsstorlek
 struct RemoteEntryView: View {
     @Environment(\.widgetFamily) var family
@@ -35,23 +35,36 @@ struct RemoteEntryView: View {
         Group {
             switch family {
             case .accessoryCircular:
-                Image(systemName: "sail-boat")
+                Image(systemName: "sailing.fill")
                     .font(.title2)
                 
             case .accessoryRectangular:
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Båt Remote")
-                        .font(.headline)
-                    Text("Senast uppd: \(entry.date, style: .time)")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
+                // Snygg Knapp-design
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("FIDELI REMOTE")
+                            .font(.system(size: 10, weight: .heavy))
+                            .foregroundStyle(.blue)
+                        Text("Tryck för styrning")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    // Visuell knapp/ikon med rund tonad bakgrund
+                    Image(systemName: "power")
+                        .font(.title3.bold())
+                        .foregroundStyle(.white)
+                        .padding(8)
+                        .background(Circle().fill(.blue.gradient))
                 }
                 
             case .accessoryInline:
                 Text("Båt: \(entry.date, style: .time)")
                 
             case .accessoryCorner:
-                Image(systemName: "sail-boat")
+                Image(systemName: "sailing.fill")
                     .widgetLabel {
                         Text("OK")
                     }
@@ -59,17 +72,18 @@ struct RemoteEntryView: View {
             default:
                 Text("Båt Remote")
             }
-        } // <-- Slut på Group
-        .containerBackground(.clear, for: .widget) // <-- Ska ligga HÄR, innan body stängs!
-    } // <-- Slut på body
+        }
+        .containerBackground(.clear, for: .widget)
+    }
 }
+
 // 4. Själva Widget-konfigurationen
 struct Remote: Widget {
     let kind: String = "Remote"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            RemoteEntryView(entry: entry) // <-- Namnet ska matcha structen ovan
+            RemoteEntryView(entry: entry)
         }
         .configurationDisplayName("Båtstyrning")
         .description("Visa båtstatus direkt på urtavlan.")
