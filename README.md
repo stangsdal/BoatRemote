@@ -162,6 +162,7 @@ Eftersom watchOS erbjuder många olika typer av urtavlor och komplikationsplatse
 1. Modulär Kompakt & Modulär (Modular & Modular Compact)
 Varför? Dessa har platser för stora/breda rektangulära komplikationer i mitten.
 Passar för: Om din komplikation visar text eller två värden samtidigt (t.ex. både vindvinkel AWA: 45° och vindhastighet AWS: 12 kt).
+bilden ovan är för Modular Compact.
 
 2. Wayfinder & Ultra Modulär (För Apple Watch Ultra)
 Varför? Speciellt framtagna för utomhusaktiviteter och navigation med hög kontrast och mycket utrymme i kanterna.
