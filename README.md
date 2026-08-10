@@ -87,11 +87,11 @@ struct ContentView: View {
 📡 Signal K Endpoints som används:
 
 | Typ | Sökväg / Path | Beskrivning |
-| :--- | :--- | :--- |
+| --- | --- | --- |
 | **WS** | `/signalk/v1/stream?subscribe=self` | WebSocket-ström för `environment.wind.*` |
 | **GET** | `/signalk/v1/api/vessels/self/environment/wind/angleApparent` | Hämta vindvinkel via REST |
 | **POST** | `/signalk/v1/access/requests` | Begär ny access-token från Signal K |
 | **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/state` | Ändra läge (Auto, Standby, Wind, etc.) |
-| **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/actions/adjustHeading` | Justera kurs (t.ex. +1, -10) |
+| **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/actions/adjustHeading` | Justera kurs (t.ex. `+1`, `-10`) |
 | **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/actions/tack` | Slå (port/starboard) |
 
