@@ -19,14 +19,14 @@ final class AutopilotService: ObservableObject {
         didSet {
             let cleaned = serverHost.trimmingCharacters(in: .whitespacesAndNewlines)
             UserDefaults.standard.set(cleaned, forKey: "sk_host")
-            reconnectWebSocket()
+            resetAndReconnect()
         }
     }
     @Published var token: String {
         didSet {
             let cleaned = token.trimmingCharacters(in: .whitespacesAndNewlines)
             UserDefaults.standard.set(cleaned, forKey: "sk_token")
-            reconnectWebSocket()
+            resetAndReconnect()
         }
     }
 
@@ -37,10 +37,25 @@ final class AutopilotService: ObservableObject {
     @Published var awa: Int? = nil        // Apparent Wind Angle (i grader, 0-180)
     @Published var aws: Double? = nil     // Apparent Wind Speed (i knop)
 
-    // MARK: - Nätverk & Timers
+    // MARK: - Nätverk, Timers & Offline-hantering
     private var webSocketTask: URLSessionWebSocketTask?
     private var isWebSocketActive = false
     private var pollingTimer: Timer?
+    
+    private var wsReconnectDelay: TimeInterval = 5.0
+    private var consecutiveFailures = 0
+    
+    private var isOffline = false
+    private var isCheckingConnectivity = false
+
+    /// Egen URLSession med kort timeout (2s) och utan vänteläge för att undvika loggbrus när båtnätet saknas
+    private lazy var shortTimeoutSession: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 2.0
+        config.timeoutIntervalForResource = 2.0
+        config.waitsForConnectivity = false
+        return URLSession(configuration: config)
+    }()
 
     init() {
         self.serverHost = UserDefaults.standard.string(forKey: "sk_host") ?? "192.168.1.100:3000"
@@ -84,6 +99,13 @@ final class AutopilotService: ObservableObject {
         "\(hostWithScheme)/signalk/v1/api/vessels/self/steering/autopilot"
     }
 
+    private func resetAndReconnect() {
+        wsReconnectDelay = 5.0
+        consecutiveFailures = 0
+        isOffline = false
+        reconnectWebSocket()
+    }
+
     // MARK: - WebSocket Implementation
 
     private func reconnectWebSocket() {
@@ -96,6 +118,7 @@ final class AutopilotService: ObservableObject {
         guard let url = URL(string: wsURLString) else { return }
         
         var request = URLRequest(url: url)
+        request.timeoutInterval = 3.0
         if !token.isEmpty {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
@@ -114,6 +137,10 @@ final class AutopilotService: ObservableObject {
             
             switch result {
             case .success(let message):
+                self.wsReconnectDelay = 5.0
+                self.consecutiveFailures = 0
+                self.isOffline = false
+                
                 switch message {
                 case .string(let text):
                     self.parseSignalKDelta(text)
@@ -126,12 +153,20 @@ final class AutopilotService: ObservableObject {
                 }
                 self.listenWebSocket()
                 
-            case .failure(let error):
-                print("WebSocket fel: \(error.localizedDescription)")
+            case .failure(_):
                 self.isWebSocketActive = false
+                self.consecutiveFailures += 1
                 
-                // Försök återansluta om 5 sekunder
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+                let nextDelay = min(self.wsReconnectDelay * 1.5, 60.0)
+                self.wsReconnectDelay = nextDelay
+                
+                DispatchQueue.main.async {
+                    if self.consecutiveFailures > 2 {
+                        self.lastStatus = "Ej i båten (Pausad)"
+                    }
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + nextDelay) { [weak self] in
                     self?.connectWebSocket()
                 }
             }
@@ -150,12 +185,12 @@ final class AutopilotService: ObservableObject {
                       let rawVal = item["value"] as? Double else { continue }
 
                 if path == "environment.wind.angleApparent" {
-                    // Exakt samma beräkning som i din iPad-kod
                     let degrees = abs((rawVal * 180.0) / .pi)
                     let boundedAWA = Int(min(degrees, 180.0))
                     
                     DispatchQueue.main.async {
                         self.awa = boundedAWA
+                        self.lastStatus = "OK"
                     }
                 } else if path == "environment.wind.speedApparent" {
                     let knots = rawVal * 1.94384
@@ -167,50 +202,74 @@ final class AutopilotService: ObservableObject {
         }
     }
 
-    // MARK: - Polling Fallback (körs om WebSocket skulle tappa anslutningen)
+    // MARK: - Polling Fallback (REST)
 
     private func startPollingFallback() {
-        pollingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self, !self.isWebSocketActive else { return }
+        pollingTimer?.invalidate()
+        
+        pollingTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            
+            // Gör inga REST-anrop om WebSocket redan körs eller om vi vet att vi är offline
+            if self.isWebSocketActive || self.isOffline {
+                return
+            }
+            
             self.fetchWindDataViaREST()
         }
     }
 
     private func fetchWindDataViaREST() {
-        let apiBase = "\(hostWithScheme)/signalk/v1/api/vessels/self/environment/wind"
+        guard !isCheckingConnectivity else { return }
         
-        // 1. Fetch AWA
-        if let awaURL = URL(string: "\(apiBase)/angleApparent") {
-            var req = URLRequest(url: awaURL)
-            if !token.isEmpty { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
-            URLSession.shared.dataTask(with: req) { [weak self] data, _, _ in
-                guard let self = self, let data = data,
+        let apiBase = "\(hostWithScheme)/signalk/v1/api/vessels/self/environment/wind"
+        guard let awaURL = URL(string: "\(apiBase)/angleApparent") else { return }
+        
+        var req = URLRequest(url: awaURL)
+        if !token.isEmpty {
+            req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        isCheckingConnectivity = true
+        
+        shortTimeoutSession.dataTask(with: req) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.isCheckingConnectivity = false
+                
+                if let _ = error {
+                    // Vid nätverksfel: Sätt offline och pausa pollingen i 30s för att slippa konsolbrus
+                    if !self.isOffline {
+                        self.isOffline = true
+                        self.lastStatus = "Ej i båten (Pausad)"
+                        self.scheduleOfflineRetry()
+                    }
+                    return
+                }
+                
+                self.isOffline = false
+                
+                guard let data = data,
                       let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                       let radVal = json["value"] as? Double else { return }
                 
                 let degrees = abs((radVal * 180.0) / .pi)
                 let boundedAWA = Int(min(degrees, 180.0))
                 
-                DispatchQueue.main.async {
-                    self.awa = boundedAWA
-                }
-            }.resume()
-        }
-        
-        // 2. Fetch AWS
-        if let awsURL = URL(string: "\(apiBase)/speedApparent") {
-            var req = URLRequest(url: awsURL)
-            if !token.isEmpty { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
-            URLSession.shared.dataTask(with: req) { [weak self] data, _, _ in
-                guard let self = self, let data = data,
-                      let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                      let mpsVal = json["value"] as? Double else { return }
-                
-                let knots = mpsVal * 1.94384
-                DispatchQueue.main.async {
-                    self.aws = knots
-                }
-            }.resume()
+                self.awa = boundedAWA
+                self.lastStatus = "OK (REST)"
+            }
+        }.resume()
+    }
+
+    private func scheduleOfflineRetry() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 30.0) { [weak self] in
+            guard let self = self else { return }
+            if self.isOffline {
+                self.isOffline = false
+                self.fetchWindDataViaREST()
+            }
         }
     }
 
@@ -238,6 +297,7 @@ final class AutopilotService: ObservableObject {
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.timeoutInterval = 4.0
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let body: [String: Any] = [
@@ -248,12 +308,12 @@ final class AutopilotService: ObservableObject {
         
         DispatchQueue.main.async { self.lastStatus = "Begär access..." }
         
-        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+        shortTimeoutSession.dataTask(with: request) { [weak self] data, response, error in
             guard let self = self else { return }
             
             if let error = error {
                 DispatchQueue.main.async {
-                    self.lastStatus = "Fel: \(error.localizedDescription)"
+                    self.lastStatus = "Ej ansluten"
                 }
                 return
             }
@@ -271,7 +331,6 @@ final class AutopilotService: ObservableObject {
                 self.lastStatus = "Godkänn i Signal K-webben..."
             }
             
-            // Starta polling med en räknare (max 30 försök = 60 sek)
             self.pollAccessRequest(href: href, remainingAttempts: 30)
         }.resume()
     }
@@ -287,16 +346,15 @@ final class AutopilotService: ObservableObject {
         let urlString = href.hasPrefix("http") ? href : "\(hostWithScheme)\(href)"
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        var req = URLRequest(url: url)
+        
+        shortTimeoutSession.dataTask(with: req) { [weak self] data, response, error in
             guard let self = self, let data = data else { return }
             
             guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let state = json["state"] as? String else { return }
                 
-            // Signal K kan svara med antingen APPROVED eller COMPLETED
             if state == "APPROVED" || state == "COMPLETED" {
-                
-                // Leta efter token på alla ställen Signal K brukar stoppa den:
                 let foundToken = json["token"] as? String
                     ?? (json["accessRequest"] as? [String: Any])?["token"] as? String
                     ?? (json["result"] as? [String: Any])?["token"] as? String
@@ -305,7 +363,6 @@ final class AutopilotService: ObservableObject {
                     DispatchQueue.main.async {
                         self.token = validToken
                         self.lastStatus = "Token sparad!"
-                        print("Ny token sparades i UserDefaults")
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -314,7 +371,6 @@ final class AutopilotService: ObservableObject {
                 }
                 
             } else if state == "PENDING" {
-                // Fortsätt polla varannan sekund
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
                     self?.pollAccessRequest(href: href, remainingAttempts: remainingAttempts - 1)
                 }
@@ -336,7 +392,6 @@ final class AutopilotService: ObservableObject {
         
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
-        request.timeoutInterval = 3
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         if !token.isEmpty {
@@ -345,13 +400,12 @@ final class AutopilotService: ObservableObject {
         
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 
-        URLSession.shared.dataTask(with: request) { [weak self] _, response, error in
+        shortTimeoutSession.dataTask(with: request) { [weak self] _, response, error in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 
-                if let error = error {
-                    self.lastStatus = "\(label): Fel"
-                    print("Nätverksfel: \(error.localizedDescription)")
+                if let _ = error {
+                    self.lastStatus = "\(label): Ej ansluten"
                     return
                 }
                 

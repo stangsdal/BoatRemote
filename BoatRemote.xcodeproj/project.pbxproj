@@ -73,6 +73,7 @@
 		59C324B6302479A600DB931F /* BoatRemote-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BoatRemote-Watch-App-Info.plist"; sourceTree = "<group>"; };
 		59C405C13011603700B8CEAE /* BoatRemoteWidget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoatRemoteWidget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59C405C73011603700B8CEAE /* BoatRemote Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BoatRemote Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F1F0A43029C46600932FEA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -128,6 +129,7 @@
 		59C405BA3011603700B8CEAE = {
 			isa = PBXGroup;
 			children = (
+				59F1F0A43029C46600932FEA /* README.md */,
 				59C405CB3011603700B8CEAE /* BoatRemote Watch App */,
 				5996E2C2301E4F3500D4864A /* Frameworks */,
 				59C405C23011603700B8CEAE /* Products */,
