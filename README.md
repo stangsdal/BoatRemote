@@ -154,3 +154,18 @@ Detta steg kräver att din Apple Watch och iPhone är anslutna eller att din klo
 6. Tryck på "Play"-knappen (eller Cmd + R) för att bygga (Build) och installera (Run) appen på klockan!
 
 När byggnationen är klar (kan ta någon minut första gången) kommer appen automatiskt att öppnas på din handled.
+
+
+⌚️ Vilka urtavlor (Watch Faces) passar bäst?
+Eftersom watchOS erbjuder många olika typer av urtavlor och komplikationsplatser finns det tre källor/typer som passar extra bra för en båt-app som BoatRemote:
+
+1. Modulär Kompakt & Modulär (Modular & Modular Compact)
+Varför? Dessa har platser för stora/breda rektangulära komplikationer i mitten.
+Passar för: Om din komplikation visar text eller två värden samtidigt (t.ex. både vindvinkel AWA: 45° och vindhastighet AWS: 12 kt).
+
+2. Wayfinder & Ultra Modulär (För Apple Watch Ultra)
+Varför? Speciellt framtagna för utomhusaktiviteter och navigation med hög kontrast och mycket utrymme i kanterna.
+Passar för: Båtägare som vill ha snabb åtkomst till autopilot och vind i hörnkomplikationerna eller den stora mittenytan, samtidigt som kompassen är aktiv i mitten.
+3. Infograf (Infograph)
+Varför? Har upp till 8 komplikationer samtidigt (fyra i hörnen och fyra i mitten).
+Passar för: När du vill ha en ren cirkulär ikon (Launcher) i ett av hörnen för att snabbt starta appen med ett tryck, samtidigt som du har andra instrument (som regn/vind-prognos eller tidur) på resten av urtavlan.
