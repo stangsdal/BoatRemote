@@ -95,3 +95,50 @@ struct ContentView: View {
 | **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/actions/adjustHeading` | Justera kurs (t.ex. `+1`, `-10`) |
 | **PUT** | `/signalk/v1/api/vessels/self/steering/autopilot/actions/tack` | Slå (port/starboard) |
 
+
+---
+
+## 🚀 Installation & Komma igång
+
+Så här klonar du projektet till din Mac och installerar appen på din Apple Watch via Xcode.
+
+### Steg 1: Ladda ner projektet från GitHub
+Du behöver ladda ner kodbasen till din lokala utvecklingsmiljö.
+
+**Alternativ A: Via Terminal (Rekommenderas)**
+1. Öppna programmet **Terminal** på din Mac.
+2. Navigera till den mapp där du vill spara projektet (t.ex. `cd ~/Documents`).
+3. Kör följande kommando:
+   ```bash
+   git clone [https://github.com/nrjphwe/BoatRemote.git](https://github.com/nrjphwe/BoatRemote.git)
+   
+**Alternativ B: Ladda ner som ZIP
+1. Gå till repositoryt på GitHub: nrjphwe/BoatRemote.
+2. Klicka på den gröna knappen "Code" och välj "Download ZIP".
+3. Packa upp ZIP-filen på din dator.
+
+### Steg 2: Öppna projektet i Xcode
+1. Se till att du har Xcode installerat via Mac App Store.
+2. Öppna Xcode och klicka på "Open a project or file" (eller i menyn: File > Open...).
+3. Leta upp den nedladdade BoatRemote-mappen och dubbelklicka på projektfilen: BoatRemote.xcodeproj.
+
+### Steg 3: Signera appen med ditt Apple-ID
+För att få köra appen på en fysisk klocka måste den vara kodsignerad med ett Apple-utvecklarkonto. Det räcker med ett gratis Apple-ID.
+1. Klicka på huvudprojektet (det blå Xcode-ikonen) högst upp i filträdet till vänster.
+2. I högerpanelen, välj fliken "Signing & Capabilities".
+3.Under rubriken Team, klicka på rullgardinsmenyn.
+ - Om ditt Apple-ID inte finns med, klicka på "Add an Account..." och logga in.
+4.Välj ditt eget namn/team (t.ex. Philip Werner (Personal Team)).
+5. Se till att rutan "Automatically manage signing" är ikryssad.
+6.Kontrollera att din "Bundle Identifier" är unik (ex: se.philip.BoatRemote.watch).
+
+### Steg 4: Installera på Apple Watch
+Detta steg kräver att din Apple Watch och iPhone är anslutna eller att din klocka är ihopparad med din Mac för utveckling (Developer Mode).
+1. Lås upp din iPhone och Apple Watch.
+2. Anslut din iPhone till Macen med en kabel (eller se till att klockan och datorn är på samma nätverk).
+3. Gå in i Inställningar > Integritet och säkerhet > Utvecklarläge på din Apple Watch och aktivera det. (Klockan kommer be om omstart).
+4. Högst upp i Xcode-fönstret (i mitten) ser du en "Play"-knapp och bredvid den vilken enhet du bygger mot.
+5. Klicka på enhetsnamnet och välj din fysiska Apple Watch i listan under iOS Device (ofta listad som ett underobjekt till din inkopplade iPhone).
+6. Tryck på "Play"-knappen (eller Cmd + R) för att bygga (Build) och installera (Run) appen på klockan!
+
+När byggnationen är klar (kan ta någon minut första gången) kommer appen automatiskt att öppnas på din handled.
