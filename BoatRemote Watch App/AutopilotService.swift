@@ -301,7 +301,7 @@ final class AutopilotService: ObservableObject {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let body: [String: Any] = [
-            "clientId": "se.philip.BoatRemote.watch",
+            "clientId": "dk.stangsdal.BoatRemote.watch",
             "description": "BoatRemote Apple Watch"
         ]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
@@ -313,7 +313,7 @@ final class AutopilotService: ObservableObject {
             
             if let error = error {
                 DispatchQueue.main.async {
-                    self.lastStatus = "Ej ansluten"
+                    self.lastStatus = "Not connected"
                 }
                 return
             }
@@ -346,7 +346,7 @@ final class AutopilotService: ObservableObject {
         let urlString = href.hasPrefix("http") ? href : "\(hostWithScheme)\(href)"
         guard let url = URL(string: urlString) else { return }
         
-        var req = URLRequest(url: url)
+        let req = URLRequest(url: url)
         
         shortTimeoutSession.dataTask(with: req) { [weak self] data, response, error in
             guard let self = self, let data = data else { return }
